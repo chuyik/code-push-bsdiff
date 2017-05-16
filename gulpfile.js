@@ -135,7 +135,6 @@ gulp.task("tslint", function () {
             "one-line": [true,
                 "check-open-brace"
             ],
-            "no-unreachable": true,
             "no-unused-variable": true,
             "no-use-before-declare": true,
             "quotemark": [true,
@@ -159,8 +158,11 @@ gulp.task("tslint", function () {
     }
 
     return gulp.src([testPath + tsFiles, "!" + testPath + "/typings/*"])
-        .pipe(tslint({ configuration: config }))
-        .pipe(tslint.report("verbose"));
+        .pipe(tslint({
+            configuration: config,
+            formatter: "verbose"
+        }))
+        .pipe(tslint.report())
 });
 
 gulp.task("clean", function () {
