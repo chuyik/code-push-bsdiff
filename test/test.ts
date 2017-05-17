@@ -170,10 +170,14 @@ class RNIOS extends Platform.IOS implements RNPlatform {
         var iOSProject: string = path.join(projectDirectory, TestConfig.TestAppName, "ios");
         var infoPlistPath: string = path.join(iOSProject, TestConfig.TestAppName, "Info.plist");
         var appDelegatePath: string = path.join(iOSProject, TestConfig.TestAppName, "AppDelegate.m");
+        var isYogaExists: boolean = fs.existsSync(path.join(projectDirectory, TestConfig.TestAppName, "node_modules/react-native/ReactCommon/yoga"));
         // Create and install the Podfile
         return TestUtil.getProcessOutput("pod init", { cwd: iOSProject })
             .then(() => { return fs.writeFileSync(path.join(iOSProject, "Podfile"),
-                "target '" + TestConfig.TestAppName + "'\n  pod 'React', :path => '../node_modules/react-native', :subspecs => [ 'Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', ]\n  pod 'CodePush', :path => '../node_modules/react-native-code-push'\n"); })
+                `target '${TestConfig.TestAppName}'
+                    pod 'React', :path => '../node_modules/react-native', :subspecs => [ 'Core', 'RCTImage', 'RCTNetwork', 'RCTText', 'RCTWebSocket', ]
+                    pod 'CodePush', :path => '../node_modules/react-native-code-push'
+                    ${isYogaExists ? "pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'" : ''}`); })
             // Put the IOS deployment key in the Info.plist
             .then(TestUtil.replaceString.bind(undefined, infoPlistPath,
                 "</dict>\n</plist>",
