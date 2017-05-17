@@ -29,6 +29,9 @@
 		54A002781C0E2880004C3CEC /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 54A002681C0E2880004C3CEC /* zip.c */; };
 		54A002791C0E2880004C3CEC /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 54A0026B1C0E2880004C3CEC /* SSZipArchive.m */; };
 		54FFEDE01BF550630061DD23 /* CodePushDownloadHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 54FFEDDF1BF550630061DD23 /* CodePushDownloadHandler.m */; };
+		6CBA32F91ECAFDC3009FFCEB /* BSDiff.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CBA32EB1ECAE29C009FFCEB /* BSDiff.m */; };
+		6CBA32FA1ECAFDC8009FFCEB /* bspatch.c in Sources */ = {isa = PBXBuildFile; fileRef = 6CBA32EC1ECAE29C009FFCEB /* bspatch.c */; };
+		6CBA33D31ECB1C77009FFCEB /* libbz2.1.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CBA33D21ECB1C77009FFCEB /* libbz2.1.0.tbd */; };
 		810D4E6D1B96935000B397E9 /* CodePushPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = 810D4E6C1B96935000B397E9 /* CodePushPackage.m */; };
 		81D51F3A1B6181C2000DA084 /* CodePushConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 81D51F391B6181C2000DA084 /* CodePushConfig.m */; };
 		8482F84C1E24C58300F793DB /* CodePush.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 13BE3DEC1AC21097009241FE /* CodePush.h */; };
@@ -92,6 +95,11 @@
 		54A0026A1C0E2880004C3CEC /* SSZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSZipArchive.h; sourceTree = "<group>"; };
 		54A0026B1C0E2880004C3CEC /* SSZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSZipArchive.m; sourceTree = "<group>"; };
 		54FFEDDF1BF550630061DD23 /* CodePushDownloadHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushDownloadHandler.m; path = CodePush/CodePushDownloadHandler.m; sourceTree = "<group>"; };
+		6CBA32EA1ECAE29C009FFCEB /* BSDiff.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSDiff.h; sourceTree = "<group>"; };
+		6CBA32EB1ECAE29C009FFCEB /* BSDiff.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSDiff.m; sourceTree = "<group>"; };
+		6CBA32EC1ECAE29C009FFCEB /* bspatch.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bspatch.c; sourceTree = "<group>"; };
+		6CBA32ED1ECAE29C009FFCEB /* bspatch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bspatch.h; sourceTree = "<group>"; };
+		6CBA33D21ECB1C77009FFCEB /* libbz2.1.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.1.0.tbd; path = usr/lib/libbz2.1.0.tbd; sourceTree = SDKROOT; };
 		810D4E6C1B96935000B397E9 /* CodePushPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushPackage.m; path = CodePush/CodePushPackage.m; sourceTree = "<group>"; };
 		81D51F391B6181C2000DA084 /* CodePushConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CodePushConfig.m; path = CodePush/CodePushConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,6 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CBA33D31ECB1C77009FFCEB /* libbz2.1.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,8 +196,30 @@
 				1B23B9131BF9267B000BB2F0 /* RCTConvert+CodePushInstallMode.m */,
 				1BCC09A61CC19EB700DDC0DD /* RCTConvert+CodePushUpdateState.m */,
 				54A002481C0E2880004C3CEC /* SSZipArchive */,
+				6CBA32E91ECAE29C009FFCEB /* BSDiff */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				6CBA33D11ECB1C77009FFCEB /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		6CBA32E91ECAE29C009FFCEB /* BSDiff */ = {
+			isa = PBXGroup;
+			children = (
+				6CBA32EA1ECAE29C009FFCEB /* BSDiff.h */,
+				6CBA32EB1ECAE29C009FFCEB /* BSDiff.m */,
+				6CBA32EC1ECAE29C009FFCEB /* bspatch.c */,
+				6CBA32ED1ECAE29C009FFCEB /* bspatch.h */,
+			);
+			name = BSDiff;
+			path = CodePush/BSDiff;
+			sourceTree = "<group>";
+		};
+		6CBA33D11ECB1C77009FFCEB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6CBA33D21ECB1C77009FFCEB /* libbz2.1.0.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,6 +290,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CBA32FA1ECAFDC8009FFCEB /* bspatch.c in Sources */,
+				6CBA32F91ECAFDC3009FFCEB /* BSDiff.m in Sources */,
 				54A0026D1C0E2880004C3CEC /* aeskey.c in Sources */,
 				540D20121C7684FE00D6EF41 /* CodePushUpdateUtils.m in Sources */,
 				54A0026E1C0E2880004C3CEC /* aestab.c in Sources */,

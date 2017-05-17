@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.source         = { :git => 'https://github.com/Microsoft/react-native-code-push.git', :tag => "v#{s.version}-beta"}
   s.platform       = :ios, '7.0'
   s.preserve_paths = '*.js'
-  s.library        = 'z'
+  s.library        = 'bz2', 'z'
 
   s.dependency 'React'
 
@@ -25,6 +25,11 @@ Pod::Spec.new do |s|
   s.subspec 'SSZipArchive' do |ss|
     ss.source_files = 'ios/CodePush/SSZipArchive/*.{h,m}', 'ios/CodePush/SSZipArchive/aes/*.{h,c}', 'ios/CodePush/SSZipArchive/minizip/*.{h,c}'
     ss.private_header_files = 'ios/CodePush/SSZipArchive/*.h', 'ios/CodePush/SSZipArchive/aes/*.h', 'ios/CodePush/SSZipArchive/minizip/*.h'
+  end
+
+  s.subspec 'BSDiff' do |ss|
+    ss.source_files = 'ios/CodePush/BSDiff/*.{h,m,c}'
+    ss.private_header_files = 'ios/CodePush/BSDiff/*.h'
   end
 
 end

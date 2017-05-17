@@ -1,5 +1,7 @@
 #import "CodePush.h"
 #import "SSZipArchive.h"
+#import "BSDiff.h"
+#import "bspatch.h"
 
 @implementation CodePushPackage
 
@@ -178,7 +180,69 @@ static NSString *const UnzippedFolderName = @"unzipped";
                                                                     }
                                                                 }
                                                             }
+                                                          
+                                                            /**
+                                                             * Use BSDiff to generate missing files
+                                                             * 
+                                                             * @license MIT
+                                                             * @author Edward Chu <crazyzyt@gmail.com>
+                                                             */
+                                                            Boolean isRunningBinaryVersion = currentPackageFolderPath == nil;
+                                                            NSString *originFolderPath = isRunningBinaryVersion
+                                                                                          ? [NSBundle mainBundle].bundlePath
+                                                                                          : currentPackageFolderPath;
+                                                          
+                                                            // Regex `[filename]_[hash].bsdiff` -> `[filename]`
+                                                            NSRegularExpression *regex1 = [NSRegularExpression regularExpressionWithPattern:@"\\_\\w+\\.bsdiff$"
+                                                                                                                                    options:NSRegularExpressionCaseInsensitive
+                                                                                                                                      error:&error];
+                                                            // Regex `/CodePush/[filename]`     -> `/[filename]`
+                                                            NSRegularExpression *regex2 = [NSRegularExpression regularExpressionWithPattern:@"^CodePush\\/"
+                                                                                                                                    options:0
+                                                                                                                                      error:&error];
                                                             
+                                                            NSArray *bsDiffFiles = manifestJSON[@"bsDiffFiles"];
+                                                            if (bsDiffFiles != nil) {
+                                                              for (NSString *diffFilePath in bsDiffFiles) {
+                                                                
+                                                                NSString *filePath = [regex1 stringByReplacingMatchesInString:diffFilePath
+                                                                                                                      options:0
+                                                                                                                        range:NSMakeRange(0, [diffFilePath length])
+                                                                                                                 withTemplate:@""];
+                                                                
+                                                                // Remove "/CodePush" from filePath if this app is running binary version.
+                                                                NSString *originFilePath = isRunningBinaryVersion
+                                                                                            ? [regex2 stringByReplacingMatchesInString:filePath
+                                                                                                                               options:0
+                                                                                                                                 range:NSMakeRange(0, [filePath length])
+                                                                                                                          withTemplate:@""]
+                                                                                            : filePath;
+                                                                
+                                                                if (error != nil) {
+                                                                  failCallback(error);
+                                                                  return;
+                                                                }
+                                                                
+                                                                // Use BSPatch to generate the file
+                                                                NSString *origin = [originFolderPath stringByAppendingPathComponent:originFilePath];
+                                                                NSString *bsdiffPatch = [unzippedFolderPath stringByAppendingPathComponent:diffFilePath];
+                                                                NSString *destination =  [unzippedFolderPath stringByAppendingPathComponent:filePath];
+                                                                
+                                                                BOOL success = [BSDiff bsdiffPatch:bsdiffPatch origin:origin toDestination:destination];
+                                                                if (success) {
+                                                                  CPLog(@"Patched file: %@", destination);
+                                                                  [[NSFileManager defaultManager] removeItemAtPath:bsdiffPatch error:&error];
+                                                                  if (error) {
+                                                                    failCallback(error);
+                                                                    return;
+                                                                  }
+                                                                } else {
+                                                                  CPLog(@"Error patching file: %@", error);
+                                                                  return;
+                                                                }
+                                                              }
+                                                            }
+                                                          
                                                             [[NSFileManager defaultManager] removeItemAtPath:diffManifestFilePath
                                                                                                        error:&error];
                                                             if (error) {

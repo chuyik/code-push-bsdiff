@@ -44,7 +44,8 @@
     },
     "ios": {
       "sharedLibraries": [
-        "libz"
+        "libz",
+        "libbz2"
       ]
     },
     "params": [
