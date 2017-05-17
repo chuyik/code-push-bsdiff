@@ -6,7 +6,7 @@ Thanks so much for filing an issue or feature request! Please fill out the follo
 
 ### Reproduction
 
-[FILL THIS OUT: If possible try to reproduce your bug on our basic sample: https://github.com/Microsoft/react-native-code-push/tree/master/Examples/CodePushDemoApp. If you can't reproduce the bug on it, provide us as much info as possible about your project.]
+[FILL THIS OUT: If possible try to reproduce your bug on our basic sample: https://github.com/o2team/code-push-bsdiff/tree/master/Examples/CodePushDemoApp. If you can't reproduce the bug on it, provide us as much info as possible about your project.]
 
 ### Additional Information
 

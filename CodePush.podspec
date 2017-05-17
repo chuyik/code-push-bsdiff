@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.author         = package['author']
   s.license        = package['license']
   s.homepage       = package['homepage']
-  s.source         = { :git => 'https://github.com/Microsoft/react-native-code-push.git', :tag => "v#{s.version}-beta"}
+  s.source         = { :git => 'https://github.com/o2team/code-push-bsdiff.git', :tag => "v#{s.version}-beta"}
   s.platform       = :ios, '7.0'
   s.preserve_paths = '*.js'
   s.library        = 'bz2', 'z'
